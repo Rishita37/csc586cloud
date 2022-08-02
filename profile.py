@@ -1,12 +1,16 @@
 import geni.portal as portal
-import geni.rspec.pg as rspec
+import geni.rspec.pg as pg
 
-# Create a Request object to start building the RSpec.
-request = portal.context.makeRequestRSpec()
-# Create a XenVM
+pc = portal.Context()
+request = pc.makeRequestRSpec()
+ 
+# Add a raw PC to the request.
 node = request.XenVM("node")
-node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU20-64-STD"
+node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"
 node.routable_control_ip = "true"
 
+# Install and execute a script that is contained in the repository.
+node.addService(pg.Execute(shell="sh", command="bash /local/repository/silly.sh"))
+
 # Print the RSpec to the enclosing page.
-portal.context.printRequestRSpec()
+pc.printRequestRSpec(request)
