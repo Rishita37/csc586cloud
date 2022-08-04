@@ -16,8 +16,8 @@ for date in $days; do
     list_days+=($date)
 done
 for ip in $days; do
-    country=$(whois $(curl ifconfig.me) | grep -iE ^country | awk '{print $2}')
-    list_countries+=($country)
+    country=$(curl ipinfo.io/$ip/country)
+    countries+=${country}
 done    
 for ip in ${!countries[*]}; do
     echo "${list_ips[ip]}  ${countries[ip]} ${list_months[ip] ${list_days[ip]}" >> /var/webserver_log/unauthorized.log
