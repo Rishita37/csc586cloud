@@ -1,22 +1,24 @@
-ips=$(cat /var/log/auth.log | grep "Forgot password" | awk '{print $11}')
-dates=$(cat /var/log/auth.log | grep "Forgot password" | awk '{print $4}') # change column number to date from auth.log
-
-all_ips=()
+#!/bin/bash
+ips=$(cat /var/log/auth.log | grep "Invalid user" | awk '{print $10}')
+months=$(cat /var/log/auth.log | grep "Invalid user" | awk '{print $1}')
+days=$(cat /var/log/auth.log | grep "Invalid user" | awk '{print $2}')
+list_ips=()
+list_months=()
+list_days=()
+list_countries=()
 for ip in $ips; do
-    all_ips+=($ip)
+    list_ips+=($ip)
 done
-
-all_dates=()
-for date in $dates; do
-    all_dates+=($date)
+for date in $months; do
+    list_months+=($date)
 done
-
-countries=()
-for ip in $dates; do
+for date in $days; do
+    list_days+=($date)
+done
+for ip in $days; do
     country=$(whois $(curl ifconfig.me) | grep -iE ^country | awk '{print $2}')
-    countries+=($country)
+    list_countries+=($country)
 done    
-
 for ip in ${!countries[*]}; do
-    echo "${all_ips[ip]}  ${countries[ip]} ${all_dates[ip]}" >> /var/webserver_monitor/unauthorized.log
+    echo "${list_ips[ip]}  ${countries[ip]} ${list_months[ip] ${list_days[ip]}" >> /var/webserver_log/unauthorized.log
 done
