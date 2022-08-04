@@ -1,7 +1,7 @@
 #!/bin/bash
-ips=$(cat /var/log/auth.log | grep "Invalid user" | awk '{print $10}')
-months=$(cat /var/log/auth.log | grep "Invalid user" | awk '{print $1}')
-days=$(cat /var/log/auth.log | grep "Invalid user" | awk '{print $2}')
+ips=$(sudo cat /var/log/auth.log | grep "Invalid user" | awk '{print $10}')
+months=$(sudo cat /var/log/auth.log | grep "Invalid user" | awk '{print $1}')
+days=$(sudo cat /var/log/auth.log | grep "Invalid user" | awk '{print $2}')
 list_ips=()
 list_months=()
 list_days=()
