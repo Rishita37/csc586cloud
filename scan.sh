@@ -15,7 +15,7 @@ done
 for date in $days; do
     list_days+=($date)
 done
-for ip in $days; do
+for ip in $ips; do
     country=$(curl ipinfo.io/$ip/country)
     countries+=${country}
 done    
