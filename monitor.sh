@@ -1,5 +1,5 @@
 #!/bin/bash
-old=$(head -1 /var/webserver_monitor/count.txt)
+old=$(head -n 1 /users/rg991837/count.txt)
 latest=$(wc -l < /var/webserver_monitor/unauthorized.log)
 lines=$(($latest - $old))
 if ((lines>0));
@@ -8,4 +8,4 @@ then
 else
   echo "No unauthorized access" | mail -s "No unauthorized access" testwestchester3@gmail.com
 fi
-$lines > /var/webserver_monitor/count.txt 
+echo $lines > /users/rg991837/count.txt 
